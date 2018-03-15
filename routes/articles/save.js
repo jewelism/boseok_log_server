@@ -16,10 +16,9 @@ const uri = 'articles'
 //insert article
 router.post('/', (req, res, next) => {
   const { category, title, content } = req.body
-
   if (categoryCheck(category)) {
     if (validate(title, content)) {
-      const query = `INSERT INTO ${uri} (category, title, content) VALUES ('${category}', '${title}', '${content}');`;
+      const query = `INSERT INTO ${uri} (category, title, content) VALUES ('${category}', '${title}', '${content}')`;
       save(res, uri, query);
     } else {
       res.status(400).send(new ResBody(false, null, 'invalid body'))
