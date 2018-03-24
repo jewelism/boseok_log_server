@@ -4,11 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 // const Cache = require('./cache')
 // const { clearCache } = require('./utils')
 var routes = require('./routes/routes');
 
 var app = express();
+
+// CORS config
+app.use(cors());
 
 // clear all cache every 10 sec
 // const cacheTimer = setInterval(() => { 
