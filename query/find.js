@@ -2,7 +2,14 @@ var pool = require('../config/db')
 const ResBody = require('../models/ResBody')
 const Cache = require('../cache')
 
-function find(res, cacheUri, query, id) {
+function find(res, cacheUri, { query, params}, id) {
+  if (Cache[cacheUri]) {
+    //return cache
+    console.log('return cache :', cacheUri)
+    res.status(200).send(new ResBody(true, Cache[cacheUri], `article found successfully in cache (${cacheUri})`))
+    return true
+  }
+
   pool.getConnection(function (err, connection) {
     if (err) {
       res.status(500).send('database connection failed');
@@ -21,15 +28,8 @@ function find(res, cacheUri, query, id) {
     //   return true
     // }
 
-    if (Cache[cacheUri]) {
-      //return cache
-      console.log('return cache :', cacheUri)
-      res.status(200).send(new ResBody(true, Cache[cacheUri], `article found successfully in cache (${cacheUri})`))
-      return true
-    }
-
     try {
-      connection.query(query, function (err, rows) {
+      connection.query(query, params, function (err, rows) {
         if (err) {
           console.log('an error during query', err)
           res.status(500).send(new ResBody(false, false, 'server error'))

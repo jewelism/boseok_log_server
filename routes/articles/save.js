@@ -12,6 +12,10 @@ const categoryCheck = function (category) {
   })
 }
 
+function responseErr(res, msg) {
+  res.status(400).send(new ResBody(false, null, msg))
+}
+
 const uri = 'articles'
 //insert article
 router.post('/', (req, res, next) => {
@@ -21,10 +25,10 @@ router.post('/', (req, res, next) => {
       const query = `INSERT INTO ${uri} (category, title, content) VALUES ('${category}', '${title}', '${content}')`;
       save(res, uri, query);
     } else {
-      res.status(400).send(new ResBody(false, null, 'invalid body'))
+      responseErr(res, "invalid body");
     }
   } else {
-    res.status(400).send(new ResBody(false, null, 'invalid category name'))
+    responseErr(res, "invalid category name");
   }
 });
 
@@ -42,7 +46,7 @@ router.put('/:id', (req, res, next) => {
     const query = `UPDATE ${uri} SET category='${category}'${titlePiece}${contentPiece} WHERE id=${req.params.id}`;
     save(res, uri, query);
   } else {
-    res.status(400).send(new ResBody(false, null, 'invalid category name'))
+    responseErr(res, "invalid category name");
   }
 });
 

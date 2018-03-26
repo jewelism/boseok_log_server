@@ -4,17 +4,22 @@ const Cache = require('../cache')
 const { clearCache } = require('../utils')
 
 function save(res, cacheUri, query) {
-  pool.getConnection(function (err, connection) {
-    if (err) {
-      res.status(500).send('database connection failed');
-      return false
-    }
+  function responseErr(msg) {
+    console.log(msg)
+    res.status(500).send(new ResBody(false, false, msg));
+  }
 
+  pool.getConnection(function (err, connection) {
     try {
+      if (err) {
+        responseErr("database connection failed");
+        return false
+      }
+
       connection.query(`UPDATE article_version SET version=${Date.now()}; ${query};`, function (err, rows) {
         if (err) {
-          console.log('an error during query', err)
-          res.status(500).send(new ResBody(false, false, 'server error'))
+          console.warn('an error during query', err)
+          responseErr(`server error : ${err}`);
           return false
         }
 
