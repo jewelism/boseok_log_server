@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('boseok-log-backend:server');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('/etc/letsencrypt/live/boseok.me/privkey.pem', 'utf8');
+var privateKey = fs.readFileSync('/etc/letsencrypt/live/boseok.me/privkey.pem', 'utf8');
 var certificate = fs.readFileSync('/etc/letsencrypt/live/boseok.me/fullchain.pem', 'utf8');
 var credentials = { key: privateKey, cert: certificate };
 var httpsServer = https.createServer(credentials, app);
@@ -26,6 +26,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+require('socket.io')(server).on('connection', function (socket) { //called when new client connected
+  socket.on('chat', function (data) {
+    // console.log('Message from Client: ' + data);
+    socket.broadcast.emit('chat', data)
+  });
+});
 
 /**
  * Listen on provided port, on all network interfaces.
