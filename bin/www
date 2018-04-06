@@ -27,7 +27,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-require('socket.io')(server).on('connection', function (socket) { //called when new client connected
+require('socket.io')(httpsServer).on('connection', function (socket) { //called when new client connected
   socket.on('chat', function (data) {
     // console.log('Message from Client: ' + data);
     socket.broadcast.emit('chat', data)
