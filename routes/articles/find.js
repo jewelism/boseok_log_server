@@ -1,6 +1,5 @@
-var express = require('express');
-var router = express.Router();
-var pool = require('../../config/db')
+const router = require('express').Router();
+const pool = require('../../config/db')
 const ResBody = require('../../models/ResBody')
 const find = require('../../query/find')
 

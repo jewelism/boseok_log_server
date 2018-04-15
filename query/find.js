@@ -1,19 +1,19 @@
-var pool = require('../config/db')
-const ResBody = require('../models/ResBody')
-const Cache = require('../cache')
+const pool = require('../config/db');
+const ResBody = require('../models/ResBody');
+const Cache = require('../cache');
 
-function find(res, cacheUri, { query, params}, id) {
+function find(res, cacheUri, { query, params }, id) {
   if (Cache[cacheUri]) {
     //return cache
-    console.log('return cache :', cacheUri)
-    res.status(200).send(new ResBody(true, Cache[cacheUri], `article found successfully in cache (${cacheUri})`))
-    return true
+    // console.log('return cache :', cacheUri);
+    res.status(200).send(new ResBody(true, Cache[cacheUri], `${cacheUri} found successfully in cache`));
+    return true;
   }
 
   pool.getConnection(function (err, connection) {
     if (err) {
       res.status(500).send('database connection failed');
-      return false
+      return false;
     }
 
     // if (id && Cache.articles_all) { //get one by id from articles_all cache
@@ -31,19 +31,18 @@ function find(res, cacheUri, { query, params}, id) {
     try {
       connection.query(query, params, function (err, rows) {
         if (err) {
-          console.log('an error during query', err)
-          res.status(500).send(new ResBody(false, false, 'server error'))
-          return false
+          console.log('an error during query', err);
+          res.status(500).send(new ResBody(false, false, 'server error'));
+          return false;
         }
-        console.log('return db rows')
+
         if (cacheUri)
-          Cache[cacheUri] = rows //store in cache
-        res.status(200).send(new ResBody(true, rows, 'article found successfully in DB'))
-        return true
-      })
+          Cache[cacheUri] = rows; //store in cache
+        // console.log('res in db', rows);
+        res.status(200).send(new ResBody(true, rows, `${cacheUri}found successfully in DB`));
+      });
     } finally {
-      connection.release()
-      return true
+      connection.release();
     }
   })
 }

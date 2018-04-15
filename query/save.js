@@ -1,11 +1,11 @@
-var pool = require('../config/db')
-const ResBody = require('../models/ResBody')
-const Cache = require('../cache')
-const { clearCache } = require('../utils')
+var pool = require('../config/db');
+const ResBody = require('../models/ResBody');
+const Cache = require('../cache');
+const { clearCache } = require('../utils');
 
 function save(res, cacheUri, query) {
   function responseErr(msg) {
-    console.log(msg)
+    console.log(msg);
     res.status(500).send(new ResBody(false, false, msg));
   }
 
@@ -18,18 +18,18 @@ function save(res, cacheUri, query) {
 
       connection.query(`UPDATE article_version SET version=${Date.now()}; ${query};`, function (err, rows) {
         if (err) {
-          console.warn('an error during query', err)
+          console.warn('an error during query', err);
           responseErr(`server error : ${err}`);
           return false
         }
 
         clearCache()
-        res.status(200).send(new ResBody(true, null, "article saved successfully"))
+        res.status(200).send(new ResBody(true, null, "article saved successfully"));
         return true
       })
     } finally {
-      connection.release()
-      return true
+      connection.release();
+      return true;
     }
   })
 }
