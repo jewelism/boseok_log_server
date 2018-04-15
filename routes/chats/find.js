@@ -5,7 +5,7 @@ const find = require('../../query/find');
 
 const cacheUri = 'chats_all'
 router.get('/', (req, res, next) => {
-  const query = 'SELECT * from chats';
+  const query = "select * from (SELECT * from chats order by id desc limit 10) sub order by id asc";
   find(res, cacheUri, { query });
 })
 
