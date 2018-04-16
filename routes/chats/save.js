@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
 
   // console.log(text);
   if (text && text.trim()) {
-    const query = `INSERT INTO ${uri} (author, text, time) VALUES ('${author}', '${text}', ${Date.now()})`;
+    const query = `INSERT INTO ${uri} (author, text) VALUES ('${author}', '${text}')`;
     save(res, uri, query);
   } else {
     responseErr(res, "invalid text => null or empty");
