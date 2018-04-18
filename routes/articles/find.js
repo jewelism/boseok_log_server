@@ -15,7 +15,7 @@ router.get('/version', (req, res, next) => {
 
 const cacheUri = 'articles_all'
 router.get('/all', (req, res, next) => {
-  const query = 'SELECT * from articles order by desc';
+  const query = 'SELECT * from articles order by id desc';
   find(res, cacheUri, { query });
 })
 
