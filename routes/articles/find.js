@@ -15,15 +15,15 @@ router.get('/version', (req, res, next) => {
 
 const cacheUri = 'articles_all'
 router.get('/all', (req, res, next) => {
-  const query = 'SELECT * from articles'
+  const query = 'SELECT * from articles order by desc';
   find(res, cacheUri, { query });
 })
 
 /* GET One from articles. */
 router.get('/:id', (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
   if (parseInt(id)) {
-    query = `SELECT * from articles where id=?`
+    query = `SELECT * from articles where id=?`;
     find(res, `article_id${id}`, { query, params: id }); //id cache
     // find(res, null, query, id); //no id cache
   } else {
