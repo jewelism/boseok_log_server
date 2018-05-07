@@ -9,11 +9,11 @@ function responseErr(res, msg) {
 const uri = 'chats';
 //insert chats
 router.post('/', (req, res, next) => {
-  const { author, text } = req.body;
+  const { author, text, ip } = req.body;
 
   // console.log(text);
   if (text && text.trim()) {
-    const query = `INSERT INTO ${uri} (author, text) VALUES ('${author}', '${text}')`;
+    const query = `INSERT INTO ${uri} (author, text, ip) VALUES ('${author}', '${text}', ${ip})`;
     save(res, uri, query);
   } else {
     responseErr(res, "invalid text => null or empty");
