@@ -4,7 +4,7 @@ const save = require('../../query/save')
 const ResBody = require('../../models/ResBody')
 const { validate } = require('../../utils')
 
-const categoryList = ['js', 'react', 'cloud', 'mac', 'knowledge', 'talk']
+const categoryList = ['js', 'react', 'cloud', 'mac', 'coop', 'knowledge', 'talk']
 const categoryCheck = function (category) {
   return categoryList.some(function (el) {
     // console.log(el, category)
