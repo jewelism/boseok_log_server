@@ -1,19 +1,18 @@
-var express = require('express');
-var router = express.Router();
-const save = require('../../query/save')
-const ResBody = require('../../models/ResBody')
-const { validate } = require('../../utils')
+const router = require('express').Router();
+const save = require('../../query/save');
+const ResBody = require('../../models/ResBody');
+const { validate } = require('../../utils');
 
-const categoryList = ['js', 'react', 'cloud', 'mac', 'coop', 'knowledge', 'talk']
+const categoryList = ['js', 'react', 'cloud', 'mac', 'coop', 'dp', 'knowledge', 'talk'];
 const categoryCheck = function (category) {
   return categoryList.some(function (el) {
     // console.log(el, category)
-    return el === category
-  })
+    return el === category;
+  });
 }
 
 function responseErr(res, msg) {
-  res.status(400).send(new ResBody(false, null, msg))
+  res.status(400).send(new ResBody(false, null, msg));
 }
 
 const uri = 'articles'
@@ -25,10 +24,10 @@ router.post('/', (req, res, next) => {
       const query = `INSERT INTO ${uri} (category, title, content) VALUES ('${category}', '${title}', '${content}')`;
       save(res, uri, query);
     } else {
-      responseErr(res, "invalid body");
+      responseErr(res, 'invalid body');
     }
   } else {
-    responseErr(res, "invalid category name");
+    responseErr(res, 'invalid category name');
   }
 });
 
@@ -46,7 +45,7 @@ router.put('/:id', (req, res, next) => {
     const query = `UPDATE ${uri} SET category='${category}'${titlePiece}${contentPiece} WHERE id=${req.params.id}`;
     save(res, uri, query);
   } else {
-    responseErr(res, "invalid category name");
+    responseErr(res, 'invalid category name');
   }
 });
 
