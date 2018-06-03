@@ -3,7 +3,7 @@ const save = require('../../query/save');
 const ResBody = require('../../models/ResBody');
 const { validate } = require('../../utils');
 
-const categoryList = ['js', 'react', 'cloud', 'mac', 'coop', 'dp', 'knowledge', 'talk'];
+const categoryList = ['js', 'react', 'ts', 'vue', 'cloud', 'mac', 'coop', 'dp', 'knowledge', 'talk'];
 const categoryCheck = function (category) {
   return categoryList.some(function (el) {
     // console.log(el, category)
