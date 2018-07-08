@@ -40,6 +40,7 @@ function find(res, cacheUri, { query, params }, id) {
           Cache[cacheUri] = rows; //store in cache
         // console.log('res in db', rows);
         res.status(200).send(new ResBody(true, rows, `${cacheUri}found successfully in DB`));
+        return true;
       });
     } finally {
       connection.release();

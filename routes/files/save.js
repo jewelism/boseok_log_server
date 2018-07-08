@@ -17,3 +17,5 @@ const upload = multer({
 router.post('/save', upload.array('img'), (req, res) => {
   console.log('files', req.files);
 });
+
+module.exports = router;
