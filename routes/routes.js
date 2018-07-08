@@ -8,6 +8,6 @@ const chats = require('./chats/routes');
 router.use('/chats', chats);
 
 const files = require('./files/routes');
-router.use('/chats', files);
+router.use('/files', files);
 
 module.exports = router;
