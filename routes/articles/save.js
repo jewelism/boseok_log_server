@@ -18,10 +18,10 @@ function responseErr(res, msg) {
 const uri = 'articles'
 //insert article
 router.post('/', (req, res, next) => {
-  const { category, title, content } = req.body
+  const { category, title, content, images } = req.body;
   if (categoryCheck(category)) {
     if (validate(title, content)) {
-      const query = `INSERT INTO ${uri} (category, title, content) VALUES ('${category}', '${title}', '${content}')`;
+      const query = `INSERT INTO ${uri} (category, title, content, images) VALUES ('${category}', '${title}', '${content}', '${images}')`;
       save(res, uri, query);
     } else {
       responseErr(res, 'invalid body');

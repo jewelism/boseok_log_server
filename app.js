@@ -14,6 +14,8 @@ const app = express();
 // CORS config
 app.use(cors());
 
+//serve static file
+app.use(express.static('uploads'));
 // clear all cache every 10 sec
 // const cacheTimer = setInterval(() => { 
 //  clearAllCache()
